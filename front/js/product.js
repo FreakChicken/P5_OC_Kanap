@@ -1,5 +1,7 @@
+//déclaration des variables
 const productColors = document.getElementById("colors");
 const productQty = document.getElementById("quantity");
+
 //on récupère l'ID dans l'URL
 const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
@@ -47,20 +49,28 @@ const showProduct = (product) => {
   productPageName.innerHTML = product.name;
 };
 
+//vérification des choix de couleurs et quantitées
 const addToCartButton = document.getElementById("addToCart");
 addToCartButton.addEventListener("click", () => {
   if (productColors.value === "") {
     alert("Veuillez séléctionner une couleur svp");
   } else if (productQty.value < 1) {
     alert("Veuillez séléctionner une quantité svp");
+  } else if (productQty.value > 100) {
+    alert("Veuillez séléctionner une quantité comprise entre 1 et 100 svp");
   } else {
     addToCart();
   }
 });
+
+//ajout au panier
 const addToCart = () => {
   //récuperer le panier (tableau cart) dans local storage
+  let;
   //si cart existe en local storage alors parcourir le tableau pour verifier que le produit n'y est pas déjà (id + couleur)
+
   //si il y est on ajoute la quantité choisie au produit deja existant dans le panier
+
   //sinon j'ajoute le produit dans mon panier
   //si le panier n'existe pas on crée un tableau et on met le produit dedans
   //enfin, toujours remttre ça dans le local storage
