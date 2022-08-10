@@ -66,15 +66,15 @@ async function showCart() {
     productQuantitySelector.min = "1";
     productQuantitySelector.max = "100";
     productQuantitySelector.value = cart[i].quantity;
-    // Prix total du panier / Quantité totale de produits dans le panier
 
+    // Prix total du panier / Quantité totale de produits dans le panier
     let totalQuantity = 0;
     let totalPrice = 0;
 
     for (i = 0; i < cart.length; i++) {
       const product = await getProductById(cart[i].id);
-      totalQuantity += parseInt(cart[i].quantity);
-      totalPrice += parseInt(product.price * cart[i].quantity);
+      totalQuantity += cart[i].quantity;
+      totalPrice += product.price * cart[i].quantity;
     }
     //quantité totale
     const totalQuantityDisplay = document.getElementById("totalQuantity");
