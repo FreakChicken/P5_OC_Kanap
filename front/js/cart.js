@@ -1,5 +1,7 @@
 //récupération du panier dans le local storage
 const cart = JSON.parse(window.localStorage.getItem("cart"));
+
+//déclaration des variables prix total et quantité totale
 let totalProducts = 0;
 let totalPrice = 0;
 
@@ -22,7 +24,7 @@ async function showCart() {
   for (let i = 0; i < cart.length; i++) {
     let userProduct = await getProductById(cart[i].id);
 
-    //creation du conteneur de chaque élément et ajout de sa class, de l'id et le couleur
+    //creation du conteneur de chaque élément et ajout de sa class, de l'id et la couleur
     const productContainer = document.createElement("article");
     productContainer.classList.add("cart__item");
     productContainer.dataset.id = cart[i].id;
@@ -95,7 +97,6 @@ async function showCart() {
       );
       cartProduct.quantity = value;
       localStorage.setItem("cart", JSON.stringify(cart));
-      console.log(cartProduct);
       showCart();
     });
 
@@ -114,7 +115,7 @@ async function showCart() {
       currency: "EUR",
     }).format(totalPrice);
 
-    //Créaation du bloc supprimer
+    //Création du bloc supprimer
     const productDeleteContainer = document.createElement("div");
     productDeleteContainer.classList.add(
       "cart__item__content__settings__delete"
@@ -154,7 +155,6 @@ function deleteProduct(product) {
     cart.findIndex((v) => v.id === product._id),
     1
   );
-  console.log({ product, cart });
   localStorage.setItem("cart", JSON.stringify(cart));
   showCart();
 }
@@ -175,7 +175,7 @@ let email = document.getElementById("email");
 
 // Validation prénom
 firstName.addEventListener("input", () => {
-  if (nameRegex.test(firstName.value) == false || firstName.value == "") {
+  if (!nameRegex.test(firstName.value) || firstName.value == "") {
     document.querySelector("#firstNameErrorMsg").innerHTML =
       "Prénom non valide";
   } else {
@@ -250,7 +250,7 @@ orderForm.addEventListener("submit", (event) => {
 
   // Si données mal remplies
   else if (
-    nameRegex.test(firstName.value) == false ||
+    !nameRegex.test(firstName.value) ||
     nameRegex.test(lastName.value) == false ||
     addressRegex.test(address.value) == false ||
     nameRegex.test(city.value) == false ||
@@ -259,18 +259,17 @@ orderForm.addEventListener("submit", (event) => {
     alert("Merci de renseigner correctement vos coordonnées.");
   }
 
-  //si pret à passer la commande
+  //si pret à passer la commande on récupère les id des produits du cart
   else {
     let products = [];
-    cart.forEach((order) => {
-      products.push(order.id);
+    cart.forEach((element) => {
+      products.push(element.id);
     });
     //objet contenant les info contact et products
     const order = {
       contact,
       products,
     };
-    console.log(order);
 
     // Appel à l'api order pour envoyer les tableaux
 
@@ -290,7 +289,7 @@ orderForm.addEventListener("submit", (event) => {
         localStorage.clear();
       })
       .catch((err) => {
-        console.log("une erreur est survenue" + err);
+        alert("une erreur est survenue" + err);
       });
   }
 });
