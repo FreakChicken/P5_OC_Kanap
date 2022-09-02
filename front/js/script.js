@@ -1,4 +1,4 @@
-//Récup^ération des données sur les canap
+//Récupération des données sur les canap
 fetch("http://localhost:3000/api/products")
   .then((response) => response.json())
   .then((response) => {
@@ -33,7 +33,6 @@ const showProducts = (products) => {
     productArticle.appendChild(productImg);
     productArticle.appendChild(productName);
     productArticle.appendChild(productDescription);
-
     productLink.appendChild(productArticle);
     productContainer.appendChild(productLink);
   }

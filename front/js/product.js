@@ -48,7 +48,7 @@ const showProduct = (product) => {
   productPageName.innerHTML = product.name;
 };
 
-//vérification des choix de couleurs et quantitées
+//vérification des choix de couleurs et quantitées et ajout au panier
 function displayAndAddCartAction(product) {
   const addToCartButton = document.getElementById("addToCart");
   addToCartButton.addEventListener("click", () => {
@@ -78,6 +78,7 @@ const addToCart = (product, quantity, color) => {
     color,
     quantity: parseInt(quantity, 10),
   };
+  //on récupère le panier dans le local storage
   const cart = JSON.parse(window.localStorage.getItem("cart"));
   //si il n'y à pas délément ayant le meme ID que le payload dans le panier, on l'y ajoute
   if (!cart.some((element) => element.id === payload.id)) {
@@ -90,7 +91,6 @@ const addToCart = (product, quantity, color) => {
       cart.push(payload);
       //si un élément du cart à la meme couleur et le meme ID que celui du payload, on modifie sa quantité dans le cart
     } else {
-      //on stocke dans une variable l'index de l'élément déjà present dans le cart de meme couleur et de meme ID que celui du payload
       let productSameColorIndex = cart.findIndex(
         (element) =>
           element.id === payload.id && element.color === payload.color

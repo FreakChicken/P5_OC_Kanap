@@ -83,8 +83,8 @@ async function showCart() {
     productQuantitySelector.type = "number";
     productQuantitySelector.classList.add("itemQuantity");
     productQuantitySelector.name = "itemQuantity";
-    productQuantitySelector.min = "1";
-    productQuantitySelector.max = "100";
+    productQuantitySelector.min = 1;
+    productQuantitySelector.max = 100;
     productQuantitySelector.value = cart[i].quantity;
 
     //modification quantité
@@ -185,7 +185,7 @@ firstName.addEventListener("input", () => {
 
 //validation nom de famille
 lastName.addEventListener("input", () => {
-  if (nameRegex.test(lastName.value) == false || lastName.value == "") {
+  if (!nameRegex.test(lastName.value) || lastName.value == "") {
     document.querySelector("#lastNameErrorMsg").innerHTML = "Nom non valide";
   } else {
     document.querySelector("#lastNameErrorMsg").innerHTML = "";
@@ -194,7 +194,7 @@ lastName.addEventListener("input", () => {
 
 // Validation adresse postale
 address.addEventListener("input", () => {
-  if (addressRegex.test(address.value) == false || address.value == "") {
+  if (!addressRegex.test(address.value) || address.value == "") {
     document.querySelector("#addressErrorMsg").innerHTML = "Adresse non valide";
   } else {
     document.querySelector("#addressErrorMsg").innerHTML = "";
@@ -203,8 +203,8 @@ address.addEventListener("input", () => {
 
 // Validation ville
 
-city.addEventListener("input", (event) => {
-  if (nameRegex.test(city.value) == false || city.value == "") {
+city.addEventListener("input", () => {
+  if (!nameRegex.test(city.value) || city.value == "") {
     document.querySelector("#cityErrorMsg").innerHTML = "Ville non valide";
   } else {
     document.querySelector("#cityErrorMsg").innerHTML = "";
@@ -213,8 +213,8 @@ city.addEventListener("input", (event) => {
 
 // Validation adresse mail
 
-email.addEventListener("input", (event) => {
-  if (emailRegex.test(email.value) == false || email.value == "") {
+email.addEventListener("input", () => {
+  if (!emailRegex.test(email.value) || email.value == "") {
     document.querySelector("#emailErrorMsg").innerHTML = "Email non valide";
     document.getElementById("order").disabled = true;
   } else {
@@ -230,12 +230,13 @@ orderForm.addEventListener("submit", (event) => {
 
   // Objet avec données utilisateur
   let contact = {
-    firstName: firstName.value,
-    lastName: lastName.value,
-    address: address.value,
-    city: city.value,
-    email: email.value,
+    firstName: firstName.value.trim(),
+    lastName: lastName.value.trim(),
+    address: address.value.trim(),
+    city: city.value.trim(),
+    email: email.value.trim(),
   };
+  console.log(contact);
 
   // Si données non remplies
   if (
@@ -251,10 +252,10 @@ orderForm.addEventListener("submit", (event) => {
   // Si données mal remplies
   else if (
     !nameRegex.test(firstName.value) ||
-    nameRegex.test(lastName.value) == false ||
-    addressRegex.test(address.value) == false ||
-    nameRegex.test(city.value) == false ||
-    emailRegex.test(email.value) == false
+    !nameRegex.test(lastName.value) ||
+    !addressRegex.test(address.value) ||
+    !nameRegex.test(city.value) ||
+    !emailRegex.test(email.value)
   ) {
     alert("Merci de renseigner correctement vos coordonnées.");
   }
